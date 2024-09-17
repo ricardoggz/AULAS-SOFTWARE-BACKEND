@@ -1,5 +1,5 @@
 const express = require('express')
-
+const { adminLogin }= require('./controllers/AdminController/index.js')
 //Se ejecuta express
 const server = express()
 
@@ -13,9 +13,14 @@ server.listen(3030)
 //post: Se manda información al servidor
 //put: Actualizar información del servidor
 //delete: eliminar información del servidor
+
+//procesar formato json
+server.use(express.json())
+
 server.get('/', (req, res)=>{
     res.send('Servidor Activo')
 })
 server.get('/eventos', (req, res)=>{
     res.json('Eventos')
 })
+server.post('/admin-login', adminLogin)
