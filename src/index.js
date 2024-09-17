@@ -1,5 +1,7 @@
+const cors = require('cors')
 const express = require('express')
 const { adminLogin }= require('./controllers/AdminController/index.js')
+
 //Se ejecuta express
 const server = express()
 
@@ -16,6 +18,9 @@ server.listen(3030)
 
 //procesar formato json
 server.use(express.json())
+
+//procesar peticiones de diferentes direcciones
+server.use(cors())
 
 server.get('/', (req, res)=>{
     res.send('Servidor Activo')
