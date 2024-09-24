@@ -1,6 +1,7 @@
 const cors = require('cors')
 const express = require('express')
 const { adminLogin }= require('./controllers/AdminController/index.js')
+const { addEvent, getEvents } = require('./controllers/EventController/index.js')
 
 //Se ejecuta express
 const server = express()
@@ -28,4 +29,9 @@ server.get('/', (req, res)=>{
 server.get('/eventos', (req, res)=>{
     res.json('Eventos')
 })
+//admin login
 server.post('/admin-login', adminLogin)
+//add event
+server.post('/add-event', addEvent)
+//get events
+server.get('/all-events', getEvents)

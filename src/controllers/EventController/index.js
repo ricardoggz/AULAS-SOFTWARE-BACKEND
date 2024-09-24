@@ -1,0 +1,65 @@
+//Importar la conexióon de la bd
+const { DatabaseModel } = require('../../models/DatabaseModel/index.js')
+//iniciar la conexión
+const database = new DatabaseModel()
+
+function addEvent(req, res){
+    database.pool.getConnection(function(err, connection){
+        //Evaluar error de conexión
+        if(err) throw new Error('Algo falló en la conexión')
+        connection.query(`
+            INSERT INTO eventos(
+                evento_solicitante,
+                evento_solicitante_cargo,
+                evento_solicitante_departamento,
+                evento_solicitante_extension,
+                evento_nombre,
+                evento_palabra_clave,
+                evento_solicitante_correo_electronico,
+                evento_fecha_inicio,
+                evento_fecha_termino,
+                evento_numero_dias,
+                evento_numero_asistentes,
+                evento_comentarios
+            )
+            VALUES(
+                "${req.body.evento_solicitante}",
+                "${req.body.evento_solicitante_cargo}",
+                "${req.body.evento_solicitante_departamento}",
+                "${req.body.evento_solicitante_extension}",
+                "${req.body.evento_nombre}",
+                "${req.body.evento_palabra_clave}",
+                "${req.body.evento_solicitante_correo_electronico}",
+                "${req.body.evento_fecha_inicio}",
+                "${req.body.evento_fecha_termino}",
+                "${req.body.evento_numero_dias}",
+                "${req.body.evento_numero_asistentes}",
+                "${req.body.evento_comentarios}"
+            )
+        `,
+        function(err, rows){
+            if(err) throw new Error(err)
+            return res.json({
+                rows:rows,
+                message:'Registro agregado correctamente'
+            })
+        }
+        )
+    })
+}
+function getEvents(req, res){
+    database.pool.getConnection(function(err, connection){
+        //Evaluar error de conexión
+        if(err) throw new Error('Algo falló en la conexión')
+        connection.query(`SELECT * FROM eventos`,
+        function(err, rows){
+            if(err) throw new Error(err)
+            return res.json(rows)
+        }
+        )
+    })
+}
+module.exports={
+    addEvent,
+    getEvents
+}
