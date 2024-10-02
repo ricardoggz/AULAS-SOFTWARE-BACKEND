@@ -1,7 +1,7 @@
 const cors = require('cors')
 const express = require('express')
 const { adminLogin }= require('./controllers/AdminController/index.js')
-const { addEvent, getEvents } = require('./controllers/EventController/index.js')
+const { addEvent, getEvents, getEventById } = require('./controllers/EventController/index.js')
 
 //Se ejecuta express
 const server = express()
@@ -35,3 +35,5 @@ server.post('/admin-login', adminLogin)
 server.post('/add-event', addEvent)
 //get events
 server.get('/all-events', getEvents)
+//get event by id
+server.get('/event/:id', getEventById)

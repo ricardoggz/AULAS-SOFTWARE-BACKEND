@@ -59,7 +59,24 @@ function getEvents(req, res){
         )
     })
 }
+function getEventById(req, res){
+    database.pool.getConnection(function(err, connection){
+        //Evaluar error de conexión
+        if(err) return res.status(500).json({error: 'Algo ocurrió mal, intente más tarde'})
+        connection.query(`SELECT * FROM eventos WHERE evento_id="${req.params.id}"`,
+        function(err, rows){
+            //valida la query
+            if(err) return res.status(500).json({error: 'Algo ocurrió mal, intente más tarde'})
+            //valida que exista un registro
+            if(rows.length < 1) return res.status(404).json({error: 'Registro no encontrado'})
+            //retorna una registro válido
+            return res.status(200).json(rows)
+        }
+        )
+    })
+}
 module.exports={
     addEvent,
-    getEvents
+    getEvents,
+    getEventById
 }
