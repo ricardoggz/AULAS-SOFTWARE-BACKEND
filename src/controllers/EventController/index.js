@@ -96,7 +96,7 @@ function addDate(req, res) {
         //Evaluar error de conexión
         if (err) return res.status(500).json({ error: 'Algo ocurrió mal, intente más tarde' })
         connection.query(
-            `INSERT INTO fechas(
+            `INSERT INTO fechas(a
                 fecha_completa,
                 fecha_dia,
                 fecha_hora_inicial,
