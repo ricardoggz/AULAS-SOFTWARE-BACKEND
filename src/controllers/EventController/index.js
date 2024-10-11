@@ -99,14 +99,16 @@ function addDate(req, res) {
             `INSERT INTO fechas(
                 fecha_completa,
                 fecha_dia,
-                fecha_horario,
+                fecha_hora_inicial,
+                fecha_hora_termino,
                 fecha_espacio,
                 evento_id
             )
             VALUES(
                 "${req.body.fecha_completa}",
                 "${req.body.fecha_dia}",
-                "${req.body.fecha_horario}",
+                "${req.body.fecha_hora_inicial}",
+                "${req.body.fecha_hora_termino}",
                 "${req.body.fecha_espacio}",
                 "${req.body.evento_id}"
             )`,
