@@ -42,4 +42,4 @@ server.get('/date/:id', getDateById)
 //add date
 server.post('/add-date', addDate)
 //get all dates
-server.get('/all-dates', getDates)
+server.post('/all-dates', getDates)
