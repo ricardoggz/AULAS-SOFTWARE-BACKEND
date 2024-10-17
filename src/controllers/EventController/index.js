@@ -91,6 +91,35 @@ function getDateById(req, res) {
         )
     })
 }
+function getDates(){
+    database.pool.getConnection(function (err, connection) {
+        //Evaluar error de conexión
+        if (err) return res.status(500).json({ error: 'Algo ocurrió mal, intente más tarde' })
+        connection.query(`
+                SELECT
+                eventos.evento_nombre,
+                eventos.evento_id,
+                fechas.fecha_hora_inicial,
+                fechas.fecha_hora_termino,
+                fechas.fecha_dia,
+                fechas.fecha_completa,
+                fechas.fecha_espacio
+                FROM fechas
+                INNER JOIN eventos on eventos.evento_id = fechas.evento_id
+                WHERE fechas.fecha_completa = "${req.body.fecha_completa}"
+                AND fechas.fecha_espacio = "${req.body.fecha_espacio}"
+                `,
+            function (err, rows) {
+                //valida la query
+                if (err) return res.status(500).json({ error: 'Algo ocurrió mal, intente más tarde' })
+                //valida que exista un registro
+                if (rows.length < 1) return res.status(404).json({ error: 'Registro no encontrado' })
+                //retorna una registro válido
+                return res.status(200).json(rows)
+            }
+        )
+    })
+}
 function addDate(req, res) {
     database.pool.getConnection(function (err, connection) {
         //Evaluar error de conexión
@@ -128,5 +157,6 @@ module.exports = {
     getEvents,
     getEventById,
     getDateById,
-    addDate
+    addDate,
+    getDates
 }
