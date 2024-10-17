@@ -91,7 +91,7 @@ function getDateById(req, res) {
         )
     })
 }
-function getDates(){
+function getDates(req, res){
     database.pool.getConnection(function (err, connection) {
         //Evaluar error de conexión
         if (err) return res.status(500).json({ error: 'Algo ocurrió mal, intente más tarde' })
